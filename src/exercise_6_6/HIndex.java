@@ -1,14 +1,11 @@
 package exercise_6_6;
 
-import java.util.Scanner;
+import java.io.*;
 
-public class HIndex
-{
-    public static int hIndex(int[] citations)
-    {
+public class HIndex {
+    public static int hIndex(int[] citations) {
         int hindex = 0;
-        for (int j = 0; j < citations.length; j++)
-        {
+        for (int j = 0; j < citations.length; j++) {
             if (citations[j] >= j + 1)
                 hindex = j + 1;
             else
@@ -18,15 +15,11 @@ public class HIndex
         return hindex;
     }
 
-    public static void sort(int[] array)
-    {
+    public static void sort(int[] array) {
         int number = array.length;
-        for (int i = 0; i < number - 1; i++)
-        {
-            for (int j = 0; j < number - 1; j++)
-            {
-                if (array[j] < array[j + 1])
-                {
+        for (int i = 0; i < number - 1; i++) {
+            for (int j = 0; j < number - 1; j++) {
+                if (array[j] < array[j + 1]) {
                     int temp = array[j + 1];
                     array[j + 1] = array[j];
                     array[j] = temp;
@@ -35,23 +28,37 @@ public class HIndex
         }
     }
 
-    public static void main(String[] args)
-    {
-        Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args) {
+        File file = new File("./src/exercise_6_6/data.txt");
+        BufferedReader reader;
 
+        try {
+            reader = new BufferedReader(new FileReader(file));
+        } catch (FileNotFoundException ignored) {
+            System.out.println("File is not found");
+            return;
+        }
+
+        String line;
+
+        try {
+            line = reader.readLine();
+        } catch (IOException ioException) {
+            System.out.println("Input error occurs");
+            return;
+        }
+
+        if (line == null || line.length() == 0) {
+            System.out.println("The first line of file is empty");
+            return;
+        }
+
+        String[] num = line.split(",");
         int[] citations = new int[100];
 
-        String[] strs;
 
-        System.out.println("Please input the citation numbers:");
-
-        String line = scanner.nextLine();
-
-        strs = line.split(",");
-
-        for (int i = 0; i < strs.length; i++)
-        {
-            citations[i] = Integer.parseInt(strs[i]);
+        for (int i = 0; i < num.length; i++) {
+            citations[i] = Integer.parseInt(num[i]);
         }
 
         sort(citations);
