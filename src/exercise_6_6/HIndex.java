@@ -1,6 +1,7 @@
 package exercise_6_6;
 
 import java.io.*;
+import java.util.Scanner;
 
 public class HIndex {
     public static int hIndex(int[] citations) {
@@ -58,6 +59,15 @@ public class HIndex {
 
 
         for (int i = 0; i < num.length; i++) {
+            if (!num[i].matches("[0-9]+")) {
+                System.out.println(num[i] + " is illegal, please input a non-negative integer as replacement");
+
+                Scanner scanner = new Scanner(System.in);
+                num[i--] = scanner.nextLine();
+
+                continue;
+            }
+
             citations[i] = Integer.parseInt(num[i]);
         }
 
