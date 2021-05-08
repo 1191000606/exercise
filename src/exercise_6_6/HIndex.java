@@ -1,32 +1,22 @@
 package exercise_6_6;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class HIndex {
-    public static int hIndex(int[] citations) {
+    public static int hIndex(List<Integer> citations) {
         int hindex = 0;
-        for (int j = 0; j < citations.length; j++) {
-            if (citations[j] >= j + 1)
+        for (int j = 0; j < citations.size(); j++) {
+            if (citations.get(j) >= j + 1)
                 hindex = j + 1;
             else
                 break;
         }
 
         return hindex;
-    }
-
-    public static void sort(int[] array) {
-        int number = array.length;
-        for (int i = 0; i < number - 1; i++) {
-            for (int j = 0; j < number - 1; j++) {
-                if (array[j] < array[j + 1]) {
-                    int temp = array[j + 1];
-                    array[j + 1] = array[j];
-                    array[j] = temp;
-                }
-            }
-        }
     }
 
     public static void main(String[] args) {
@@ -55,7 +45,7 @@ public class HIndex {
         }
 
         String[] num = line.split(",");
-        int[] citations = new int[100];
+        List<Integer> citations = new ArrayList<>();
 
 
         for (int i = 0; i < num.length; i++) {
@@ -68,10 +58,11 @@ public class HIndex {
                 continue;
             }
 
-            citations[i] = Integer.parseInt(num[i]);
+            citations.add(Integer.parseInt(num[i]));
         }
 
-        sort(citations);
+        citations.sort(Integer::compareTo);
+        Collections.reverse(citations);
 
         int hindex = hIndex(citations);
 
